@@ -59,7 +59,6 @@
         </nav>
 
         <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-10">
-            <!-- Product Gallery -->
             <div class="lg:col-span-5 space-y-4">
                 <div class="bg-white rounded-xl border border-slate-100 overflow-hidden flex justify-center items-center h-[300px] md:h-[450px]">
                     <img id="main-product-img" 
@@ -68,7 +67,6 @@
                          class="img-transition max-w-full max-h-full object-contain p-2 md:p-4">
                 </div>
                 <div class="flex gap-2 md:gap-3 justify-center overflow-x-auto pb-2">
-                    <!-- Borders set to default slate-200, no persistent orange border on load -->
                     <button onclick="changeImage('Gemini_Generated_Image_v9qw49v9qw49v9qw.png', this)" class="thumb-btn flex-shrink-0 w-16 h-16 md:w-20 md:h-20 border border-slate-200 rounded-md p-1 overflow-hidden bg-white">
                         <img src="Gemini_Generated_Image_v9qw49v9qw49v9qw.png" class="w-full h-full object-cover">
                     </button>
@@ -81,7 +79,6 @@
                 </div>
             </div>
 
-            <!-- Product Info -->
             <div class="lg:col-span-4 space-y-3 md:space-y-4">
                 <h1 class="text-xl md:text-2xl font-semibold text-slate-800 leading-tight">SimplePro X1 Professional Wireless Studio Headphones - Hybrid Noise Cancelling, 60h Battery Life</h1>
                 <div class="flex items-center gap-1 text-orange-500">
@@ -108,7 +105,6 @@
                 </div>
             </div>
 
-            <!-- Checkout Box -->
             <div class="lg:col-span-3">
                 <div class="border border-slate-200 rounded-xl p-4 md:p-5 space-y-4 shadow-sm bg-slate-50/50">
                     <div class="text-2xl font-medium text-slate-900">£159.99</div>
@@ -123,7 +119,6 @@
 
         <hr class="my-10 md:my-16 border-slate-100">
 
-        <!-- Reviews Section -->
         <section id="reviews-section" class="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12">
             <div class="lg:col-span-4">
                 <h2 class="text-xl font-bold mb-4">Customer Reviews</h2>
@@ -159,7 +154,6 @@
                 </div>
             </div>
 
-            <!-- Review Feed -->
             <div class="lg:col-span-8">
                 <h3 class="text-xl font-bold text-slate-800 mb-6 md:mb-8">Verified Customer Feedback</h3>
                 <div id="review-list" class="space-y-8 md:y-10">
@@ -270,7 +264,7 @@
                         <div class="flex text-orange-400 text-xs">${'★'.repeat(r.rating || 0)}${'☆'.repeat(5-(r.rating||0))}</div>
                         <span class="text-sm font-bold text-slate-800">${r.title || 'Product Feedback'}</span>
                     </div>
-                    <p class="text-[10px] md:text-[11px] text-slate-400 mb-2 md:mb-3 underline tracking-wide">Verified Purchase — ${r.date ? new Date(r.date).toLocaleDateString('en-GB') : 'Recently'}</p>
+                    <p class="text-[10px] md:text-[11px] text-slate-400 mb-2 md:mb-3 tracking-wide">Reviewed on ${r.date ? new Date(r.date).toLocaleDateString('en-GB') : 'Recently'}</p>
                     <p class="text-sm text-slate-600 leading-relaxed">${r.comment || ''}</p>
                 </div>
             `).join('');
