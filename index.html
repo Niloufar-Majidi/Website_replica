@@ -32,6 +32,32 @@
         </defs>
     </svg>
 
+    <!-- Regulatory Compliance Modal -->
+    <div id="compliance-modal" class="fixed inset-0 z-[100] hidden flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-sm">
+        <div class="bg-white rounded-2xl shadow-2xl max-w-lg w-full p-6 md:p-8 animate-fadeIn">
+            <h2 class="text-xl font-bold text-slate-900 mb-4 border-b pb-2">Regulatory Compliance Check</h2>
+            <p class="text-sm text-slate-600 leading-relaxed mb-6">
+                Please confirm your understanding of the following statutory requirements before proceeding.
+            </p>
+            <div class="flex items-start gap-3 bg-slate-50 p-4 rounded-xl border border-slate-200 mb-6">
+                <div class="pt-1">
+                    <input type="checkbox" id="compliance-check" class="w-5 h-5 cursor-pointer accent-orange-500 rounded border-slate-300 focus:ring-orange-500" onchange="toggleProceedButton()">
+                </div>
+                <label for="compliance-check" class="text-sm text-slate-700 leading-relaxed cursor-pointer select-none">
+                    I confirm my understanding that submitting a misleading review for compensation is against the platform’s terms of service and violates the <strong>Digital Markets, Competition and Consumers Act 2024</strong>, which explicitly makes fake or concealed incentivised consumer reviews unlawful from April 2025.
+                </label>
+            </div>
+            <div class="flex flex-col sm:flex-row gap-3">
+                <button id="proceed-btn" disabled onclick="handleComplianceConfirm()" class="flex-grow prime-btn py-3 rounded-full text-sm font-bold shadow-sm disabled:opacity-50 disabled:cursor-not-allowed">
+                    Proceed to Review
+                </button>
+                <button onclick="closeComplianceModal()" class="px-6 py-3 border border-slate-300 rounded-full text-sm font-medium hover:bg-slate-50 transition">
+                    Cancel
+                </button>
+            </div>
+        </div>
+    </div>
+
     <header class="bg-[#131921] text-white p-2 md:p-3 sticky top-0 z-50">
         <div class="max-w-7xl mx-auto flex flex-wrap items-center justify-between gap-2 md:gap-4">
             <div class="text-xl md:text-2xl font-bold cursor-pointer">simple<span class="text-orange-400">prime</span></div>
@@ -59,6 +85,7 @@
         </nav>
 
         <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-10">
+            <!-- Product Gallery -->
             <div class="lg:col-span-5 space-y-4">
                 <div class="bg-white rounded-xl border border-slate-100 overflow-hidden flex justify-center items-center h-[300px] md:h-[450px]">
                     <img id="main-product-img" 
@@ -79,6 +106,7 @@
                 </div>
             </div>
 
+            <!-- Product Info -->
             <div class="lg:col-span-4 space-y-3 md:space-y-4">
                 <h1 class="text-xl md:text-2xl font-semibold text-slate-800 leading-tight">SimplePro X1 Professional Wireless Studio Headphones - Hybrid Noise Cancelling, 60h Battery Life</h1>
                 <div class="flex items-center gap-1 text-orange-500">
@@ -87,8 +115,8 @@
                 </div>
                 <hr class="border-slate-100">
                 <div class="flex items-baseline gap-2">
-                    <span class="text-2xl md:text-3xl font-light">£159.99</span>
-                    <span class="text-sm text-slate-500 line-through">RRP: £199.99</span>
+                    <span class="text-2xl md:text-3xl font-light">£20.00</span>
+                    <span class="text-sm text-slate-500 line-through">RRP: £24.99</span>
                 </div>
                 <div class="text-sm space-y-1">
                     <p class="text-green-700 font-bold">In stock</p>
@@ -107,7 +135,7 @@
 
             <div class="lg:col-span-3">
                 <div class="border border-slate-200 rounded-xl p-4 md:p-5 space-y-4 shadow-sm bg-slate-50/50">
-                    <div class="text-2xl font-medium text-slate-900">£159.99</div>
+                    <div class="text-2xl font-medium text-slate-900">£20.00</div>
                     <p class="text-sm">Returns: <span class="text-cyan-700 underline cursor-pointer">30-day return policy</span></p>
                     <div class="space-y-3">
                         <button onclick="updateBasket()" class="prime-btn w-full py-3 rounded-full text-sm font-bold shadow-sm">Add to Basket</button>
@@ -119,15 +147,17 @@
 
         <hr class="my-10 md:my-16 border-slate-100">
 
+        <!-- Reviews Section -->
         <section id="reviews-section" class="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12">
             <div class="lg:col-span-4">
                 <h2 class="text-xl font-bold mb-4">Customer Reviews</h2>
                 <div class="border-t border-slate-100 pt-6">
                     <h3 class="text-lg font-bold mb-1">Review this product</h3>
                     <p class="text-sm text-slate-600 mb-4">Provide authentic feedback to assist our research community.</p>
-                    <button onclick="toggleReviewForm()" class="w-full border border-slate-300 rounded-lg py-3 text-sm font-medium hover:bg-slate-50 transition">Write a customer review</button>
+                    <button onclick="openComplianceModal()" class="w-full border border-slate-300 rounded-lg py-3 text-sm font-medium hover:bg-slate-50 transition">Write a customer review</button>
                 </div>
 
+                <!-- Review Form -->
                 <div id="review-form" class="hidden mt-6 bg-white border border-slate-200 p-4 md:p-6 rounded-2xl shadow-xl">
                     <form id="submit-review-form" class="space-y-4">
                         <div>
@@ -154,6 +184,7 @@
                 </div>
             </div>
 
+            <!-- Review Feed -->
             <div class="lg:col-span-8">
                 <h3 class="text-xl font-bold text-slate-800 mb-6 md:mb-8">Verified Customer Feedback</h3>
                 <div id="review-list" class="space-y-8 md:y-10">
@@ -178,6 +209,41 @@
         let currentRating = 0;
         let basketCount = 0;
 
+        // Modal Logic
+        function openComplianceModal() {
+            document.getElementById('compliance-modal').classList.remove('hidden');
+            document.body.style.overflow = 'hidden'; // Prevent scroll
+        }
+
+        function closeComplianceModal() {
+            document.getElementById('compliance-modal').classList.add('hidden');
+            document.body.style.overflow = '';
+            document.getElementById('compliance-check').checked = false;
+            toggleProceedButton();
+        }
+
+        function toggleProceedButton() {
+            const isChecked = document.getElementById('compliance-check').checked;
+            document.getElementById('proceed-btn').disabled = !isChecked;
+        }
+
+        function handleComplianceConfirm() {
+            closeComplianceModal();
+            toggleReviewForm(true); // Open the form directly
+        }
+
+        function toggleReviewForm(bypass = false) {
+            const form = document.getElementById('review-form');
+            if (bypass) {
+                form.classList.remove('hidden');
+                form.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            } else {
+                form.classList.toggle('hidden');
+            }
+            document.getElementById('rating-error').classList.add('hidden');
+        }
+
+        // Standard Store Logic
         function changeImage(src, btn) {
             const mainImg = document.getElementById('main-product-img');
             mainImg.style.opacity = '0.3';
@@ -185,7 +251,6 @@
                 mainImg.src = src;
                 mainImg.style.opacity = '1';
             }, 100);
-            
             const thumbs = document.querySelectorAll('.thumb-btn');
             thumbs.forEach(b => b.classList.remove('thumbnail-active'));
             btn.classList.add('thumbnail-active');
@@ -199,14 +264,6 @@
                 svg.classList.toggle('star-active', idx < n);
                 svg.classList.toggle('star-inactive', idx >= n);
             });
-        }
-
-        function toggleReviewForm() {
-            document.getElementById('review-form').classList.toggle('hidden');
-            document.getElementById('rating-error').classList.add('hidden');
-            if(!document.getElementById('review-form').classList.contains('hidden')) {
-                document.getElementById('review-form').scrollIntoView({ behavior: 'smooth', block: 'center' });
-            }
         }
 
         function updateBasket() {
